@@ -1,9 +1,9 @@
 {
-  "name": "generoi/wp-plugin-boilerplate",
+  "name": "generoi/wp-genero-gdpr",
   "type": "wordpress-plugin",
   "license": "MIT",
-  "description": "A boilerplate WordPress plugin",
-  "homepage": "https://github.com/generoi/wp-plugin-boilerplate",
+  "description": "Various tools for becoming GDPR compliant",
+  "homepage": "https://github.com/generoi/wp-genero-gdpr",
   "authors": [
     {
       "name": "Oskar Schöldström",
@@ -14,7 +14,7 @@
     "wordpress"
   ],
   "support": {
-    "issues": "https://github.com/generoi/wp-plugin-boilerplate/issues"
+    "issues": "https://github.com/generoi/wp-genero-gdpr/issues"
   },
   "repositories": [
     {
@@ -23,21 +23,31 @@
     }
   ],
   "require": {
-    "php": ">=5.6.0",
+    "php": ">=7.0.0",
     "composer/installers": "~1.0",
     "yahnis-elsts/plugin-update-checker": "^4.4"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.5.1"
   },
+  "suggested": {
+    "paragonie/halite": "Required for encryption gravityform submission values"
+  },
   "autoload": {
+    "classmap": [
+      "src/ComposerScript.php"
+    ],
     "psr-4": {
-      "GeneroWP\\PluginBoilerplate\\": "src/"
+      "GeneroWP\\GDPR\\": "src/"
     }
   },
   "scripts": {
     "test": [
       "vendor/bin/phpcs"
+    ],
+    "generate-keys": "GeneroWP\\GDPR\\ComposerScript::generateKeyPair",
+    "post-install-cmd": [
+        "GeneroWP\\GDPR\\ComposerScript::generateKeyPair"
     ]
   },
   "archive" : {

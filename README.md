@@ -1,23 +1,47 @@
-# wp-plugin-boilerplate
+# wp-genero-gdpr
 
-> A wordpress boilerplate plugin with which you can write ES6 JavaScript and SASS.
+> Various tools for becoming GDPR complaint
 
 ## Requirements
 
-_Does the plugin have any requirements?_
+- For encrypting gravityform submission fields you need either PHP 7.0 with the PECL libsodium extension or PHP 7.2+
 
 ## Features
 
-_A list of features_.
+- Expire gravityfrom submissions (defaults to all forms with 1 year but can be changed on a per-form basis)
+- Encrypt gravityform submission entries
+
+## Installation
+
+### Form submission encryption
+
+When the plugin is first installed a key-pair is automatically generated. Follow the instructions and add the required defines to `wp-config.php`
+
+```php
+define('GENERO_GDPR_ENCRYPT_ENABLED', true);
+define('GENERO_GDPR_PUBLIC_KEY', $root_dir . '/genero-gdpr.public.key');
+```
+
+If the key-pair wasn't saved you can manually generate a new key-pair by running `composer run generate-keys` in the plugin directory. Move the generated `genero-gdpr.public.key` to place and add it to `wp-config.php`.
+
+**WARNING! If you lose the private key and have encryption enabled it will be impossible to recover the data.**
 
 ## API
 
-_Any hooks exposed?_
-
 ```php
-// Load recaptcha script.
-add_filter('gravityforms-timber/options', function ($options) {
-  $options['recaptcha'] = true;
+// Change the default expiration time of gravityform submissions
+add_filter('wp-genero-gdpr/expire-submissions/default_expiration_time', function ($time) {
+  return '3 months';
+});
+
+// Override the expiration time of gravityform submissions
+add_filter('wp-genero-gdpr/expire-submissions/expiration_time', function ($time) {
+  return '1 day';
+});
+
+// Change the amount of submissions that are deleted at a time
+add_filter('wp-genero-gdpr/expire-submissions/pager', function ($pager) {
+  return 50;
 });
 ```
 
@@ -26,19 +50,7 @@ add_filter('gravityforms-timber/options', function ($options) {
 Install dependencies
 
     composer install
-    npm install
 
-Run the tests
+Generate a new key-pair
 
-    npm run test
-
-Build assets
-
-    # Minified assets which are to be committed to git
-    npm run build
-
-    # Development assets while developing the plugin
-    npm run build:development
-
-    # Watch for changes and re-compile while developing the plugin
-    npm run watch
+    composer run generate-keys
