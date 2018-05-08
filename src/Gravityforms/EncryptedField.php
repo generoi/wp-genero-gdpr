@@ -65,7 +65,6 @@ class EncryptedField
     {
         foreach ($form['fields'] as $field) {
             if (!empty($field->encrypt)) {
-
                 $inputs = $field->get_entry_inputs();
                 if (!is_array($inputs)) {
                     $value = rgar($entry, (string) $field->id);

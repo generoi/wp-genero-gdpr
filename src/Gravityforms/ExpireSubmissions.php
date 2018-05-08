@@ -34,14 +34,13 @@ class ExpireSubmissions
 
         foreach ($forms as $form) {
             $disable_expiration = rgar($form, 'disable_expiration');
-            $expiration_time = rgar($form, 'expiration_time') ?: apply_filters('wp-genero-gdpr/expire-submissions/default_expiration_time', '1 day');
+            $expiration_time = rgar($form, 'expiration_time') ?: apply_filters('wp-genero-gdpr/expire-submissions/default_expiration_time', '1 year');
             if (empty($disable_expiration)) {
                 $entries = GFAPI::get_entries($form['id'], $this->search_criteria($expiration_time));
                 foreach ($entries as $entry) {
                     GFAPI::delete_entry($entry['id']);
                 }
             }
-
         }
     }
 
@@ -63,7 +62,8 @@ class ExpireSubmissions
     /**
     * Save the added form options.
     */
-    public function gform_settings_save($form) {
+    public function gform_settings_save($form)
+    {
         $form['disable_expiration'] = rgpost('disable_expiration');
         $form['expiration_time'] = rgpost('expiration_time');
         return $form;
