@@ -28,7 +28,8 @@
     "yahnis-elsts/plugin-update-checker": "^4.4"
   },
   "require-dev": {
-    "squizlabs/php_codesniffer": "^2.5.1"
+    "squizlabs/php_codesniffer": "^2.5.1",
+    "paragonie/halite": "^4 || ^3"
   },
   "suggest": {
     "paragonie/halite": "Required for encryption gravityform submission values"
