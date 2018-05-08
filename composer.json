@@ -30,7 +30,7 @@
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.5.1"
   },
-  "suggested": {
+  "suggest": {
     "paragonie/halite": "Required for encryption gravityform submission values"
   },
   "autoload": {
