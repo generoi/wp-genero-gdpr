@@ -35,6 +35,7 @@ class Plugin
     public static $modules = [
         Gravityforms\EncryptedField::class,
         Gravityforms\ExpireSubmissions::class,
+        Gravityforms\AnonymizeIp::class,
     ];
 
     public function __construct()
