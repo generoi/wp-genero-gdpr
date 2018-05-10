@@ -126,7 +126,9 @@ class EncryptedField
         try {
             $value = $this->getCrypto()->decrypt($value, $secret);
             return $value;
-        } catch (\ParagonIE\Halite\Alerts\InvalidKey | \ParagonIE\Halite\Alerts\InvalidMessage $e) {
+        } catch (\ParagonIE\Halite\Alerts\InvalidKey $e) {
+            return $value;
+        } catch (\ParagonIE\Halite\Alerts\InvalidMessage $e) {
             return $value;
         }
     }
