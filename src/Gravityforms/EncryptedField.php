@@ -15,7 +15,7 @@ class EncryptedField
 
     public static function is_active()
     {
-        return defined('GENERO_GDPR_ENCRYPT_ENABLED') && GENERO_GDPR_ENCRYPT_ENABLED;
+        return defined('GENERO_GDPR_ENCRYPT_ENABLED') && GENERO_GDPR_ENCRYPT_ENABLED && (version_compare(PHP_VERSION, '7.0.0') >= 0);
     }
 
     public function plugins_loaded()
